@@ -4,6 +4,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Wedding palette */
+:root {
+  --w-burgundy: #6B0F1A;
+  --w-burgundy-deep: #4a0a12;
+  --w-gold: #C9A84C;
+  --w-gold-light: #F5E6A3;
+  --w-cream: #FDF6EC;
+  --w-ink: #2C1810;
+}
+
+@theme inline {
+  --color-w-burgundy: var(--w-burgundy);
+  --color-w-burgundy-deep: var(--w-burgundy-deep);
+  --color-w-gold: var(--w-gold);
+  --color-w-gold-light: var(--w-gold-light);
+  --color-w-cream: var(--w-cream);
+  --color-w-ink: var(--w-ink);
+  --font-royal: "Cinzel Decorative", "Playfair Display", serif;
+  --font-serif-elegant: "Cormorant Garamond", serif;
+  --font-script: "Great Vibes", "Tangerine", cursive;
+}
+
+@keyframes w-flicker {
+  0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 8px #F5E6A3); }
+  45% { opacity: 0.85; transform: scale(0.96); filter: drop-shadow(0 0 4px #C9A84C); }
+  60% { opacity: 1; transform: scale(1.04); filter: drop-shadow(0 0 12px #F5E6A3); }
+}
+.w-flicker { animation: w-flicker 1.8s ease-in-out infinite; transform-origin: bottom center; }
+
+@keyframes w-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.w-shimmer {
+  background-image: linear-gradient(110deg, transparent 35%, rgba(245,230,163,0.55) 50%, transparent 65%);
+  background-size: 200% 100%;
+  animation: w-shimmer 2.4s linear infinite;
+}
+
 /*
  * Design system definition.
  *
