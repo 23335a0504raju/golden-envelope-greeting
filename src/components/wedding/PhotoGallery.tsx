@@ -211,10 +211,9 @@ function Lightbox({
             key={index}
             src={photos[index]}
             alt={`Photo ${index + 1}`}
-            custom={dir}
-            initial={(d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0.6 })}
+            initial={{ x: dir >= 0 ? "100%" : "-100%", opacity: 0.6 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={(d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0.6 })}
+            exit={{ x: dir >= 0 ? "-100%" : "100%", opacity: 0.6 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
             style={{ border: `2px solid ${GOLD}66` }}
