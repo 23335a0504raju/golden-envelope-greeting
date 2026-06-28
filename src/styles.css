@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html { scroll-behavior: smooth; }
+
 /* Wedding palette */
 :root {
   --w-burgundy: #6B0F1A;
