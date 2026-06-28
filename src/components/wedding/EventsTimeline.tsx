@@ -104,7 +104,11 @@ function EventCard({ def, info, side, index }: { def: EventDef; info: EventInfo;
   return (
     <div
       ref={ref}
-      className={`relative w-full md:w-1/2 flex ${side === "left" ? "md:justify-end md:pr-12" : "md:justify-start md:pl-12"} pl-12 md:pl-0`}
+      className={`relative w-full md:w-1/2 flex ${
+        side === "left"
+          ? "md:justify-end md:pr-12"
+          : "md:justify-start md:pl-12 md:ml-auto"
+      } pl-12 md:pl-0`}
     >
       {/* Timeline node */}
       <span
