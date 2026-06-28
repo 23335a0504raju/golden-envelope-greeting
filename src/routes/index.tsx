@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/wedding/HeroSection";
 import { EventsTimeline } from "@/components/wedding/EventsTimeline";
 import { FamilySection } from "@/components/wedding/FamilySection";
 import { PhotoGallery } from "@/components/wedding/PhotoGallery";
+import { VenueSection } from "@/components/wedding/VenueSection";
 import { EditPanel } from "@/components/wedding/EditPanel";
 import { WeddingConfigProvider, defaultWeddingConfig as weddingConfig } from "@/lib/wedding-config";
 
@@ -30,6 +31,7 @@ function Index() {
         <EventsTimeline />
         <FamilySection />
         <PhotoGallery />
+        <VenueSection />
         <AnimatePresence>
           {!revealed && (
             <motion.div
