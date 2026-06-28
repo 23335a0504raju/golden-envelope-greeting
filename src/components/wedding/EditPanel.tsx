@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { useWeddingConfig, type WeddingConfig, type EventInfo } from "@/lib/wedding-config";
+import { useWeddingConfig, type WeddingConfig, type EventInfo, type FamilySide } from "@/lib/wedding-config";
 
 function Field({
   label,
@@ -144,7 +144,7 @@ export function EditPanel() {
     });
   };
 
-  const updFamily = (side: "bride" | "groom", key: keyof WeddingConfig["family"]["bride"], v: string) =>
+  const updFamily = (side: "bride" | "groom", key: keyof FamilySide, v: string) =>
     setDraft((d) => ({ ...d, family: { ...d.family, [side]: { ...d.family[side], [key]: v } } }));
 
   const updPhoto = (i: number, url: string) =>
@@ -247,9 +247,9 @@ export function EditPanel() {
 
               <TabsContent value="family" className="mt-4 space-y-4">
                 {(["bride", "groom"] as const).map((side) => (
-                  <div key={side}>
+                  <div key={side} className="space-y-3">
                     <h4
-                      className="mb-2 uppercase tracking-[0.2em]"
+                      className="uppercase tracking-[0.2em]"
                       style={{
                         color: "#6B0F1A",
                         fontFamily: "var(--font-serif-elegant)",
@@ -258,16 +258,56 @@ export function EditPanel() {
                     >
                       {side === "bride" ? "Bride's Family" : "Groom's Family"}
                     </h4>
-                    <div className="grid grid-cols-2 gap-2">
-                      {(["father", "mother", "brother", "sister"] as const).map((rel) => (
-                        <Field
+                    {(["father", "mother", "brother", "sister"] as const).map((rel) => {
+                      const photoKey = `${rel}Photo` as keyof FamilySide;
+                      const photoVal = draft.family[side][photoKey] as string;
+                      const name = draft.family[side][rel] as string;
+                      const ini = name
+                        .split(" ")
+                        .filter(Boolean)
+                        .slice(0, 2)
+                        .map((p) => p[0]?.toUpperCase())
+                        .join("");
+                      return (
+                        <div
                           key={rel}
-                          label={rel}
-                          value={draft.family[side][rel]}
-                          onChange={(v) => updFamily(side, rel, v)}
-                        />
-                      ))}
-                    </div>
+                          className="flex items-center gap-3 rounded-lg p-2"
+                          style={{
+                            background: "rgba(107,15,26,0.05)",
+                            border: "1px solid rgba(201,168,76,0.35)",
+                          }}
+                        >
+                          <label className="relative grid h-12 w-12 shrink-0 cursor-pointer place-items-center overflow-hidden rounded-full"
+                            style={{ border: "2px solid #C9A84C", background: "linear-gradient(135deg, #F5E6A3, #C9A84C)" }}
+                          >
+                            {photoVal ? (
+                              <img src={photoVal} alt={rel} className="h-full w-full object-cover" />
+                            ) : (
+                              <span style={{ color: "#6B0F1A", fontFamily: "var(--font-royal)", fontSize: 14, fontWeight: 700 }}>
+                                {ini || "+"}
+                              </span>
+                            )}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) updFamily(side, photoKey, URL.createObjectURL(f));
+                              }}
+                            />
+                            <span className="absolute -bottom-0 -right-0 grid h-4 w-4 place-items-center rounded-full bg-[#6B0F1A] text-[8px] text-[#F5E6A3]">📷</span>
+                          </label>
+                          <div className="flex-1">
+                            <Field
+                              label={rel}
+                              value={name}
+                              onChange={(v) => updFamily(side, rel, v)}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 ))}
               </TabsContent>
