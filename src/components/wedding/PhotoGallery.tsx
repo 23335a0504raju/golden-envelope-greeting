@@ -515,7 +515,7 @@ export function PhotoGallery() {
               key={i}
               src={src}
               index={i + 1}
-              height={window.innerWidth >= 480 ? 240 : 200}
+              height={220}
               onOpen={open}
             />
           ))}
