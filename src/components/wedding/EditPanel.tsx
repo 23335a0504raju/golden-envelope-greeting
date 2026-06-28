@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { useWeddingConfig, type WeddingConfig, type EventInfo, type FamilySide } from "@/lib/wedding-config";
+import { useWeddingConfig, defaultWeddingConfig, type WeddingConfig, type EventInfo, type FamilySide } from "@/lib/wedding-config";
 
 function Field({
   label,
@@ -119,6 +119,68 @@ function EventEditor({
         />
       </div>
     </div>
+  );
+}
+
+function PhotoSlot({
+  index,
+  value,
+  onChange,
+}: {
+  index: number;
+  value: string;
+  onChange: (url: string) => void;
+}) {
+  const [dragOver, setDragOver] = useState(false);
+  const handleFile = (file?: File) => {
+    if (file && file.type.startsWith("image/")) onChange(URL.createObjectURL(file));
+  };
+  return (
+    <label
+      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragOver(false);
+        handleFile(e.dataTransfer.files?.[0]);
+      }}
+      className="flex cursor-pointer flex-col items-center gap-1.5 rounded-md p-2 transition"
+      style={{
+        background: "rgba(107,15,26,0.05)",
+        border: `1px solid ${dragOver ? "#C9A84C" : "rgba(201,168,76,0.4)"}`,
+        transform: dragOver ? "scale(1.02)" : "scale(1)",
+      }}
+    >
+      <div
+        className="grid aspect-square w-full place-items-center overflow-hidden rounded-lg"
+        style={{ background: "#6B0F1A", border: "1px solid #C9A84C" }}
+      >
+        {value ? (
+          <img src={value} alt={`photo ${index + 1}`} className="h-full w-full object-cover" />
+        ) : (
+          <span style={{ color: "#F5E6A3", fontSize: 12 }}>Empty</span>
+        )}
+      </div>
+      <span
+        className="text-[10px] uppercase tracking-widest"
+        style={{ color: "#6B0F1A", fontFamily: "var(--font-royal)" }}
+      >
+        Photo {index + 1}
+      </span>
+      <span
+        className="flex items-center gap-1 text-[10px] uppercase tracking-widest"
+        style={{ color: "#6B0F1A", fontFamily: "var(--font-serif-elegant)" }}
+      >
+        <Upload className="h-3 w-3" />
+        Replace
+      </span>
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFile(e.target.files?.[0])}
+      />
+    </label>
   );
 }
 
@@ -313,42 +375,19 @@ export function EditPanel() {
               </TabsContent>
 
               <TabsContent value="photos" className="mt-4">
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {draft.photos.map((p, i) => (
-                    <div
-                      key={i}
-                      className="flex flex-col items-center gap-1.5 rounded-md p-2"
-                      style={{ background: "rgba(107,15,26,0.05)", border: "1px solid rgba(201,168,76,0.4)" }}
-                    >
-                      <div
-                        className="grid aspect-square w-full place-items-center overflow-hidden rounded"
-                        style={{ background: "#6B0F1A", border: "1px solid #C9A84C" }}
-                      >
-                        {p ? (
-                          <img src={p} alt={`photo ${i + 1}`} className="h-full w-full object-cover" />
-                        ) : (
-                          <span style={{ color: "#F5E6A3", fontSize: 12 }}>Empty</span>
-                        )}
-                      </div>
-                      <label
-                        className="flex cursor-pointer items-center gap-1 text-[10px] uppercase tracking-widest"
-                        style={{ color: "#6B0F1A", fontFamily: "var(--font-serif-elegant)" }}
-                      >
-                        <Upload className="h-3 w-3" />
-                        Replace
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const f = e.target.files?.[0];
-                            if (f) updPhoto(i, URL.createObjectURL(f));
-                          }}
-                        />
-                      </label>
-                    </div>
+                    <PhotoSlot key={i} index={i} value={p} onChange={(url) => updPhoto(i, url)} />
                   ))}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setDraft({ ...draft, photos: [...defaultWeddingConfig.photos] })}
+                  className="mt-4 text-xs underline"
+                  style={{ color: "#6B0F1A", fontFamily: "var(--font-serif-elegant)" }}
+                >
+                  Reset to defaults
+                </button>
               </TabsContent>
             </Tabs>
           </div>
