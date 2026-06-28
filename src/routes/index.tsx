@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { InvitationScreen } from "@/components/wedding/InvitationScreen";
 import { HeroSection } from "@/components/wedding/HeroSection";
+import { EventsTimeline } from "@/components/wedding/EventsTimeline";
 import { EditPanel } from "@/components/wedding/EditPanel";
 import { WeddingConfigProvider, defaultWeddingConfig as weddingConfig } from "@/lib/wedding-config";
 
@@ -24,6 +25,7 @@ function Index() {
     <WeddingConfigProvider>
       <div className="relative">
         <HeroSection />
+        <EventsTimeline />
         <AnimatePresence>
           {!revealed && (
             <motion.div
