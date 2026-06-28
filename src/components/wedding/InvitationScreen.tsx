@@ -1,7 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, BellOff } from "lucide-react";
-import { weddingConfig } from "@/lib/wedding-config";
+import { useWeddingConfig, type WeddingConfig } from "@/lib/wedding-config";
 import { MandalaBorder, OmSymbol, Diya } from "./MandalaBorder";
 
 const GoldParticles = lazy(() =>
@@ -10,7 +10,8 @@ const GoldParticles = lazy(() =>
 
 type Phase = "envelope" | "opening" | "card-sliding" | "card-open" | "revealed";
 
-export function InvitationScreen() {
+export function InvitationScreen({ onRevealed }: { onRevealed?: () => void } = {}) {
+  const { config } = useWeddingConfig();
   const [phase, setPhase] = useState<Phase>("envelope");
   const [revealed, setRevealed] = useState(false);
   const [audioOn, setAudioOn] = useState(false);
@@ -27,6 +28,12 @@ export function InvitationScreen() {
       clearTimeout(t3);
     };
   }, []);
+
+  useEffect(() => {
+    if (!revealed) return;
+    const t = setTimeout(() => onRevealed?.(), 1800);
+    return () => clearTimeout(t);
+  }, [revealed, onRevealed]);
 
   const trigger = () => {
     if (phase === "envelope") setPhase("opening");
@@ -233,7 +240,7 @@ export function InvitationScreen() {
                 }}
                 transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
               >
-                <CardContent open={cardOpen} />
+                <CardContent open={cardOpen} config={config} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -295,33 +302,12 @@ export function InvitationScreen() {
               transition={{ duration: 1.4, ease: [0.7, 0, 0.3, 1], delay: 0.2 }}
             />
             <motion.div
-              className="fixed inset-0 z-[70] grid place-items-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6 }}
-              style={{ background: "var(--w-cream)" }}
-            >
-              <div className="px-6 text-center" style={{ color: "var(--w-ink)" }}>
-                <p
-                  className="text-sm uppercase tracking-[0.4em]"
-                  style={{ color: "var(--w-burgundy)", fontFamily: "var(--font-serif-elegant)" }}
-                >
-                  Welcome
-                </p>
-                <h2
-                  className="mt-4 text-3xl sm:text-5xl"
-                  style={{ fontFamily: "var(--font-script)", color: "var(--w-burgundy)" }}
-                >
-                  {weddingConfig.brideName} &amp; {weddingConfig.groomName}
-                </h2>
-                <p
-                  className="mt-4 text-base sm:text-lg"
-                  style={{ fontFamily: "var(--font-serif-elegant)" }}
-                >
-                  The main invitation continues here…
-                </p>
-              </div>
-            </motion.div>
+              className="fixed inset-0 z-[70]"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              transition={{ delay: 1.4, duration: 0.4 }}
+              style={{ background: "transparent", pointerEvents: "none" }}
+            />
           </>
         )}
       </AnimatePresence>
@@ -329,7 +315,7 @@ export function InvitationScreen() {
   );
 }
 
-function CardContent({ open }: { open: boolean }) {
+function CardContent({ open, config }: { open: boolean; config: WeddingConfig }) {
   return (
     <div
       className="relative mx-auto"
@@ -398,7 +384,7 @@ function CardContent({ open }: { open: boolean }) {
               textShadow: "0 1px 0 rgba(255,255,255,0.6)",
             }}
           >
-            {weddingConfig.brideName}
+            {config.brideName}
           </h1>
           <p
             className="my-1"
@@ -420,7 +406,7 @@ function CardContent({ open }: { open: boolean }) {
               textShadow: "0 1px 0 rgba(255,255,255,0.6)",
             }}
           >
-            {weddingConfig.groomName}
+            {config.groomName}
           </h1>
 
           <div
@@ -436,7 +422,7 @@ function CardContent({ open }: { open: boolean }) {
               letterSpacing: "0.12em",
             }}
           >
-            {weddingConfig.weddingDate}
+            {config.weddingDate}
           </p>
           <p
             className="mt-1 px-2"
@@ -447,15 +433,15 @@ function CardContent({ open }: { open: boolean }) {
               fontSize: "clamp(0.6rem, 1.5vw, 0.75rem)",
             }}
           >
-            {weddingConfig.venue}
+            {config.venue}
           </p>
         </motion.div>
       </div>
 
       {/* LEFT FLAP — hinged at its inner (right) edge. Closed: rotateY 180 (folded across the left half of the inner page). Open: rotateY 0 (lies flat at the far left). */}
-      <Flap side="left" open={open} delay={0.15} />
+      <Flap side="left" open={open} delay={0.15} config={config} />
       {/* RIGHT FLAP — hinged at its inner (left) edge. Closed: rotateY -180 (folded across the right half of the inner page). Open: rotateY 0. */}
-      <Flap side="right" open={open} delay={0.65} />
+      <Flap side="right" open={open} delay={0.65} config={config} />
     </div>
   );
 }
@@ -464,10 +450,12 @@ function Flap({
   side,
   open,
   delay,
+  config,
 }: {
   side: "left" | "right";
   open: boolean;
   delay: number;
+  config: WeddingConfig;
 }) {
   const isLeft = side === "left";
   const closed = isLeft ? 180 : -180;
@@ -533,7 +521,7 @@ function Flap({
             textShadow: "0 2px 8px rgba(0,0,0,0.6)",
           }}
         >
-          {isLeft ? weddingConfig.brideName[0] : weddingConfig.groomName[0]}
+          {isLeft ? config.brideName[0] : config.groomName[0]}
         </div>
         {/* small flourish */}
         <div
