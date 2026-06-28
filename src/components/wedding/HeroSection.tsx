@@ -331,6 +331,7 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
+      id="hero"
       className="relative flex min-h-screen w-full flex-col items-center overflow-hidden px-4 py-12 sm:py-16"
       style={{
         background:
