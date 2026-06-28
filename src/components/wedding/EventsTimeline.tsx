@@ -130,8 +130,8 @@ function EventCard({ def, info, side, index }: { def: EventDef; info: EventInfo;
           whileTap={{ scale: 0.98 }}
           className={`group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1.5
             ${isMain
-              ? "w-[92vw] md:w-[462px] border-2 border-[#E8C766] shadow-[0_10px_50px_rgba(107,15,26,0.35),0_0_30px_rgba(232,199,102,0.35)]"
-              : "w-[92vw] md:w-[420px] border border-[rgba(201,168,76,0.4)] shadow-[0_8px_40px_rgba(107,15,26,0.10)] hover:shadow-[0_14px_50px_rgba(107,15,26,0.18)] hover:border-[rgba(201,168,76,0.8)]"}
+              ? "w-full md:w-[462px] border-2 border-[#E8C766] shadow-[0_10px_50px_rgba(107,15,26,0.35),0_0_30px_rgba(232,199,102,0.35)]"
+              : "w-full md:w-[420px] border border-[rgba(201,168,76,0.4)] shadow-[0_8px_40px_rgba(107,15,26,0.10)] hover:shadow-[0_14px_50px_rgba(107,15,26,0.18)] hover:border-[rgba(201,168,76,0.8)]"}
           `}
           style={
             isMain
