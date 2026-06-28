@@ -81,11 +81,8 @@ export function InvitationScreen() {
         style={{ perspective: "1600px" }}
       >
         <div
-          className="relative"
-          style={{
-            width: "min(90vw, 440px)",
-            transformStyle: "preserve-3d",
-          }}
+          className="relative w-[min(90vw,440px)] md:w-[min(70vw,560px)] lg:w-[640px]"
+          style={{ transformStyle: "preserve-3d" }}
           onClick={trigger}
         >
           {/* ENVELOPE */}
@@ -222,9 +219,8 @@ export function InvitationScreen() {
             {cardOut && (
               <motion.div
                 key="card"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2"
+                className="absolute left-1/2 top-1/2 w-[min(88vw,420px)] -translate-x-1/2 md:w-[min(66vw,520px)] lg:w-[600px]"
                 style={{
-                  width: "min(88vw, 420px)",
                   zIndex: 20,
                   transformStyle: "preserve-3d",
                   perspective: "1400px",
