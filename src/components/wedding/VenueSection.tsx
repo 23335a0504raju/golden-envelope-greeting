@@ -715,9 +715,8 @@ export function VenueSection() {
           </motion.div>
         </div>
 
-        {/* Row 2 */}
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {/* How To Reach */}
+        {/* Row 2 — How To Reach (full width) */}
+        <div className="mt-6">
           <GlassCard fromLeft delay={0.2}>
             <div className="mb-4 flex items-center gap-3">
               <CompassIcon />
@@ -725,7 +724,7 @@ export function VenueSection() {
                 How To Reach
               </h3>
             </div>
-            <div className="-mx-2 flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+            <div className="-mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
               <TransportCard
                 icon={<CarIcon />}
                 title="By Car"
@@ -757,10 +756,11 @@ export function VenueSection() {
               />
             </div>
           </GlassCard>
+        </div>
 
-          {/* Dress Code + RSVP */}
-          <div className="space-y-6">
-            <motion.div
+        {/* Row 3 — Dress Code + RSVP */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <motion.div
               initial={{ x: 80, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, amount: 0.15 }}
@@ -821,7 +821,6 @@ export function VenueSection() {
               </div>
               <RsvpForm />
             </motion.div>
-          </div>
         </div>
 
         {/* Footer */}
