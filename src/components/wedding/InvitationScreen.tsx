@@ -340,78 +340,43 @@ function CardContent({ open }: { open: boolean }) {
       style={{
         aspectRatio: "0.72 / 1",
         width: "100%",
-        perspective: "1400px",
+        perspective: "1600px",
       }}
     >
-      {/* center spine */}
+      {/* INNER PAGE — the surface revealed when both flaps fold open.
+          Lives in the centered middle half of the card. */}
       <div
-        className="absolute inset-0 rounded-lg"
+        className="absolute inset-y-0 left-1/4 right-1/4 overflow-hidden rounded-sm"
         style={{
           background:
             "linear-gradient(180deg, #fff8e8 0%, #FDF6EC 50%, #f3e6c8 100%)",
           boxShadow:
-            "0 30px 60px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.4)",
+            "0 30px 60px -15px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(201,168,76,0.35)",
         }}
-      />
-      {/* LEFT PANEL */}
-      <motion.div
-        className="absolute inset-y-0 left-0 w-1/2 origin-right rounded-l-lg"
-        style={{
-          background:
-            "linear-gradient(135deg, #fff8e8 0%, #FDF6EC 60%, #f3e6c8 100%)",
-          borderRight: "1px solid rgba(201,168,76,0.3)",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden",
-        }}
-        initial={{ rotateY: 180 }}
-        animate={{ rotateY: open ? 0 : 180 }}
-        transition={{ duration: 1.0, ease: [0.6, 0, 0.3, 1], delay: open ? 0.1 : 0 }}
-      />
-      {/* RIGHT PANEL */}
-      <motion.div
-        className="absolute inset-y-0 right-0 w-1/2 origin-left rounded-r-lg"
-        style={{
-          background:
-            "linear-gradient(225deg, #fff8e8 0%, #FDF6EC 60%, #f3e6c8 100%)",
-          borderLeft: "1px solid rgba(201,168,76,0.3)",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden",
-        }}
-        initial={{ rotateY: -180 }}
-        animate={{ rotateY: open ? 0 : -180 }}
-        transition={{ duration: 1.0, ease: [0.6, 0, 0.3, 1], delay: open ? 0.55 : 0 }}
-      />
-
-      {/* CARD CONTENT (visible when both panels open) */}
-      <motion.div
-        className="absolute inset-0 grid grid-rows-[1fr]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: open ? 1 : 0 }}
-        transition={{ delay: open ? 1.4 : 0, duration: 0.6 }}
       >
         <MandalaBorder className="absolute inset-0 h-full w-full" />
+        <Diya className="absolute left-2 top-2 h-7 w-7 sm:left-3 sm:top-3 sm:h-9 sm:w-9" />
+        <Diya className="absolute right-2 top-2 h-7 w-7 sm:right-3 sm:top-3 sm:h-9 sm:w-9" />
+        <Diya className="absolute bottom-2 left-2 h-7 w-7 sm:bottom-3 sm:left-3 sm:h-9 sm:w-9" />
+        <Diya className="absolute bottom-2 right-2 h-7 w-7 sm:bottom-3 sm:right-3 sm:h-9 sm:w-9" />
 
-        {/* corner diyas */}
-        <Diya className="absolute left-3 top-3 h-8 w-8 sm:left-4 sm:top-4 sm:h-10 sm:w-10" />
-        <Diya className="absolute right-3 top-3 h-8 w-8 sm:right-4 sm:top-4 sm:h-10 sm:w-10" />
-        <Diya className="absolute bottom-3 left-3 h-8 w-8 sm:bottom-4 sm:left-4 sm:h-10 sm:w-10" />
-        <Diya className="absolute bottom-3 right-3 h-8 w-8 sm:bottom-4 sm:right-4 sm:h-10 sm:w-10" />
-
-        <div className="relative flex flex-col items-center justify-center px-6 text-center sm:px-10">
-          <OmSymbol className="h-10 w-10 sm:h-12 sm:w-12" />
+        <motion.div
+          className="relative flex h-full flex-col items-center justify-center px-4 text-center sm:px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: open ? 1 : 0 }}
+          transition={{ delay: open ? 1.3 : 0, duration: 0.6 }}
+        >
+          <OmSymbol className="h-9 w-9 sm:h-11 sm:w-11" />
           <div
-            className="mt-3 h-px w-16"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, #C9A84C, transparent)",
-            }}
+            className="mt-2 h-px w-12"
+            style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }}
           />
           <p
-            className="mt-4 italic"
+            className="mt-3 italic"
             style={{
               fontFamily: "var(--font-serif-elegant)",
               color: "var(--w-ink)",
-              fontSize: "clamp(0.85rem, 2.4vw, 1.05rem)",
+              fontSize: "clamp(0.7rem, 1.9vw, 0.95rem)",
               letterSpacing: "0.08em",
             }}
           >
@@ -422,18 +387,18 @@ function CardContent({ open }: { open: boolean }) {
             style={{
               color: "var(--w-burgundy)",
               fontFamily: "var(--font-serif-elegant)",
-              fontSize: "clamp(0.62rem, 1.6vw, 0.75rem)",
+              fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
             }}
           >
             to the wedding of
           </p>
 
           <h1
-            className="mt-4 leading-none"
+            className="mt-3 leading-none"
             style={{
               fontFamily: "var(--font-script)",
               color: "var(--w-burgundy)",
-              fontSize: "clamp(2.4rem, 9vw, 3.6rem)",
+              fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
               textShadow: "0 1px 0 rgba(255,255,255,0.6)",
             }}
           >
@@ -444,7 +409,7 @@ function CardContent({ open }: { open: boolean }) {
             style={{
               fontFamily: "var(--font-royal)",
               color: "var(--w-gold)",
-              fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)",
+              fontSize: "clamp(0.75rem, 1.9vw, 0.95rem)",
               letterSpacing: "0.3em",
             }}
           >
@@ -455,7 +420,7 @@ function CardContent({ open }: { open: boolean }) {
             style={{
               fontFamily: "var(--font-script)",
               color: "var(--w-burgundy)",
-              fontSize: "clamp(2.4rem, 9vw, 3.6rem)",
+              fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
               textShadow: "0 1px 0 rgba(255,255,255,0.6)",
             }}
           >
@@ -463,36 +428,127 @@ function CardContent({ open }: { open: boolean }) {
           </h1>
 
           <div
-            className="mt-5 h-px w-20"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, #C9A84C, transparent)",
-            }}
+            className="mt-4 h-px w-16"
+            style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }}
           />
           <p
-            className="mt-3"
+            className="mt-2"
             style={{
               fontFamily: "var(--font-serif-elegant)",
               color: "var(--w-ink)",
-              fontSize: "clamp(0.78rem, 2.1vw, 0.95rem)",
+              fontSize: "clamp(0.65rem, 1.7vw, 0.8rem)",
               letterSpacing: "0.12em",
             }}
           >
             {weddingConfig.weddingDate}
           </p>
           <p
-            className="mt-1 px-4"
+            className="mt-1 px-2"
             style={{
               fontFamily: "var(--font-serif-elegant)",
               color: "var(--w-ink)",
               opacity: 0.75,
-              fontSize: "clamp(0.7rem, 1.9vw, 0.85rem)",
+              fontSize: "clamp(0.6rem, 1.5vw, 0.75rem)",
             }}
           >
             {weddingConfig.venue}
           </p>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
+
+      {/* LEFT FLAP — hinged at its inner (right) edge. Closed: rotateY 180 (folded across the left half of the inner page). Open: rotateY 0 (lies flat at the far left). */}
+      <Flap side="left" open={open} delay={0.15} />
+      {/* RIGHT FLAP — hinged at its inner (left) edge. Closed: rotateY -180 (folded across the right half of the inner page). Open: rotateY 0. */}
+      <Flap side="right" open={open} delay={0.65} />
     </div>
+  );
+}
+
+function Flap({
+  side,
+  open,
+  delay,
+}: {
+  side: "left" | "right";
+  open: boolean;
+  delay: number;
+}) {
+  const isLeft = side === "left";
+  const closed = isLeft ? 180 : -180;
+  return (
+    <motion.div
+      className={`absolute inset-y-0 w-1/4 ${isLeft ? "left-0" : "right-0"}`}
+      style={{
+        transformStyle: "preserve-3d",
+        transformOrigin: isLeft ? "right center" : "left center",
+      }}
+      initial={{ rotateY: closed }}
+      animate={{ rotateY: open ? 0 : closed }}
+      transition={{ duration: 1.1, ease: [0.6, 0, 0.25, 1], delay: open ? delay : 0 }}
+    >
+      {/* OUTER face (visible when the flap lies flat / open) — paper/cream */}
+      <div
+        className={`absolute inset-0 ${isLeft ? "rounded-l-sm" : "rounded-r-sm"}`}
+        style={{
+          background:
+            "linear-gradient(180deg, #fff8e8 0%, #FDF6EC 50%, #f3e6c8 100%)",
+          backfaceVisibility: "hidden",
+          boxShadow: "inset 0 0 0 1px rgba(201,168,76,0.3)",
+        }}
+      >
+        {/* subtle inside ornament */}
+        <div
+          className="absolute inset-y-6 w-px"
+          style={{
+            [isLeft ? "right" : "left"]: "6px",
+            background:
+              "linear-gradient(180deg, transparent, rgba(201,168,76,0.5), transparent)",
+          } as React.CSSProperties}
+        />
+      </div>
+
+      {/* INNER face (visible when the flap is folded shut — the printed cover) */}
+      <div
+        className={`absolute inset-0 grid place-items-center ${isLeft ? "rounded-l-sm" : "rounded-r-sm"}`}
+        style={{
+          transform: "rotateY(180deg)",
+          backfaceVisibility: "hidden",
+          background:
+            "linear-gradient(135deg, #7a1320 0%, #6B0F1A 55%, #4a0a12 100%)",
+          boxShadow:
+            "inset 0 0 0 1px rgba(201,168,76,0.55), inset 0 0 24px rgba(0,0,0,0.45)",
+        }}
+      >
+        {/* gold border */}
+        <div
+          className="absolute inset-2 rounded-sm"
+          style={{ border: "1px solid rgba(201,168,76,0.6)" }}
+        />
+        <div
+          className="absolute inset-3 rounded-sm"
+          style={{ border: "1px dashed rgba(201,168,76,0.35)" }}
+        />
+        {/* Half-monogram: left flap shows the bride initial, right flap shows the groom initial — meeting in the middle when closed */}
+        <div
+          className="relative grid place-items-center"
+          style={{
+            fontFamily: "var(--font-script)",
+            color: "var(--w-gold-light)",
+            fontSize: "clamp(2.2rem, 7vw, 3rem)",
+            textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+          }}
+        >
+          {isLeft ? weddingConfig.brideName[0] : weddingConfig.groomName[0]}
+        </div>
+        {/* small flourish */}
+        <div
+          className="absolute bottom-4 h-px w-8"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+          }}
+        />
+      </div>
+    </motion.div>
   );
 }
