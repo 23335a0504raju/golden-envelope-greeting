@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { InvitationScreen } from "@/components/wedding/InvitationScreen";
 import { HeroSection } from "@/components/wedding/HeroSection";
 import { EventsTimeline } from "@/components/wedding/EventsTimeline";
+import { FamilySection } from "@/components/wedding/FamilySection";
 import { EditPanel } from "@/components/wedding/EditPanel";
 import { WeddingConfigProvider, defaultWeddingConfig as weddingConfig } from "@/lib/wedding-config";
 
@@ -23,9 +24,10 @@ function Index() {
   const [revealed, setRevealed] = useState(false);
   return (
     <WeddingConfigProvider>
-      <div className="relative">
+      <div className="relative overflow-x-hidden">
         <HeroSection />
         <EventsTimeline />
+        <FamilySection />
         <AnimatePresence>
           {!revealed && (
             <motion.div
