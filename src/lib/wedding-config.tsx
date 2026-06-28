@@ -17,10 +17,17 @@ export type WeddingConfig = {
   wedding: EventInfo;
   reception: EventInfo;
   family: {
-    bride: { father: string; mother: string; brother: string; sister: string };
-    groom: { father: string; mother: string; brother: string; sister: string };
+    bride: FamilySide;
+    groom: FamilySide;
   };
   photos: string[];
+};
+
+export type FamilySide = {
+  father: string; fatherPhoto: string;
+  mother: string; motherPhoto: string;
+  brother: string; brotherPhoto: string;
+  sister: string; sisterPhoto: string;
 };
 
 export const defaultWeddingConfig: WeddingConfig = {
@@ -40,15 +47,23 @@ export const defaultWeddingConfig: WeddingConfig = {
   family: {
     bride: {
       father: "Ramesh Sharma",
+      fatherPhoto: "",
       mother: "Lakshmi Sharma",
+      motherPhoto: "",
       brother: "Karthik Sharma",
+      brotherPhoto: "",
       sister: "Divya Sharma",
+      sisterPhoto: "",
     },
     groom: {
       father: "Suresh Reddy",
+      fatherPhoto: "",
       mother: "Padma Reddy",
+      motherPhoto: "",
       brother: "Vikram Reddy",
+      brotherPhoto: "",
       sister: "Sneha Reddy",
+      sisterPhoto: "",
     },
   },
   photos: ["", "", "", "", "", ""],
