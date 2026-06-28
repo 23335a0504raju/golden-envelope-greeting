@@ -121,50 +121,6 @@ function FloatingParticles() {
   );
 }
 
-/* -------- Lotus divider -------- */
-function Lotus() {
-  const petals = Array.from({ length: 8 });
-  return (
-    <motion.svg
-      viewBox="0 0 200 120"
-      className="mx-auto h-20 w-40 sm:h-24 sm:w-48"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id="lotusGold" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F5E6A3" />
-          <stop offset="100%" stopColor="#8a6f24" />
-        </linearGradient>
-      </defs>
-      {petals.map((_, i) => {
-        const a = -90 + (i - (petals.length - 1) / 2) * 18;
-        return (
-          <motion.ellipse
-            key={i}
-            cx="100"
-            cy="110"
-            rx="10"
-            ry="44"
-            fill="url(#lotusGold)"
-            opacity={0.85}
-            transform={`rotate(${a} 100 110)`}
-            variants={{
-              hidden: { scaleY: 0, opacity: 0 },
-              show: { scaleY: 1, opacity: 0.9, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-            }}
-            style={{ transformOrigin: "100px 110px" }}
-          />
-        );
-      })}
-      <circle cx="100" cy="108" r="6" fill="#C9A84C" />
-    </motion.svg>
-  );
-}
-
 /* -------- Couple photo circle -------- */
 function CoupleCircle({
   src,
@@ -377,15 +333,13 @@ export function HeroSection() {
       />
 
       <div className="relative z-10 flex w-full max-w-3xl flex-col items-center text-center">
-        <Lotus />
-
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8, duration: 0.7 }}
           className="flex flex-col items-center"
         >
-          <DiyaFlicker size={32} />
+          <DiyaFlicker size={36} />
           <p
             className="mt-1 italic"
             style={{
@@ -404,11 +358,12 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -40, rotateY: 25 }}
             animate={inView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 1, ease: "easeOut", delay: 1.2 }}
-            className="leading-none"
+            className="py-1"
             style={{
               fontFamily: "var(--font-script)",
               color: "#F5E6A3",
               fontSize: "clamp(3.5rem, 11vw, 6rem)",
+              lineHeight: 1.25,
               textShadow: "0 4px 18px rgba(0,0,0,0.6)",
               maxWidth: "100%",
               wordBreak: "break-word",
@@ -441,11 +396,12 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 40, rotateY: -25 }}
             animate={inView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 1, ease: "easeOut", delay: 1.8 }}
-            className="leading-none"
+            className="py-1"
             style={{
               fontFamily: "var(--font-script)",
               color: "#F5E6A3",
               fontSize: "clamp(3.5rem, 11vw, 6rem)",
+              lineHeight: 1.25,
               textShadow: "0 4px 18px rgba(0,0,0,0.6)",
               maxWidth: "100%",
               wordBreak: "break-word",

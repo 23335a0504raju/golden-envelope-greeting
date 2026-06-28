@@ -1,3 +1,5 @@
+import { OmLogo } from "./OmLogo";
+
 export function MandalaBorder({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -68,17 +70,9 @@ export function OmSymbol({ className = "" }: { className?: string }) {
           <stop offset="100%" stopColor="#8a6f24" />
         </radialGradient>
       </defs>
-      <text
-        x="50"
-        y="68"
-        textAnchor="middle"
-        fontSize="58"
-        fontFamily="'Noto Sans Devanagari', serif"
-        fill="url(#omGold)"
-        style={{ fontWeight: 700 }}
-      >
-        ॐ
-      </text>
+      <svg x="25" y="25" width="50" height="50" overflow="visible">
+        <OmLogo className="w-full h-full text-[#C9A84C]" />
+      </svg>
     </svg>
   );
 }

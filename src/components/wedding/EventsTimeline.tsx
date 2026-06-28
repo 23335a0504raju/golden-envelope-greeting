@@ -1,6 +1,7 @@
 import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useWeddingConfig, type EventInfo } from "@/lib/wedding-config";
+import { EventCalendar } from "./EventCalendar";
 
 type EventDef = {
   key: "mehendi" | "haldi" | "wedding" | "reception";
@@ -341,6 +342,9 @@ export function EventsTimeline() {
             })}
           </div>
         </div>
+
+        {/* Themed calendar with all fetched event dates */}
+        <EventCalendar />
 
         {/* Footer */}
         <div className="relative text-center mt-16 md:mt-24 px-4">
