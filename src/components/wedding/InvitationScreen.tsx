@@ -496,14 +496,13 @@ function Flap({
           boxShadow: "inset 0 0 0 1px rgba(201,168,76,0.3)",
         }}
       >
-        {/* subtle inside ornament */}
+        {/* subtle inside ornament along the spine */}
         <div
-          className="absolute inset-y-6 w-px"
+          className={`absolute inset-y-6 w-px ${isLeft ? "right-1.5" : "left-1.5"}`}
           style={{
-            [isLeft ? "right" : "left"]: "6px",
             background:
               "linear-gradient(180deg, transparent, rgba(201,168,76,0.5), transparent)",
-          } as React.CSSProperties}
+          }}
         />
       </div>
 
